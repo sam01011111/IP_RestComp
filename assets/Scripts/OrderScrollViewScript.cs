@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class OrderScrollViewScript : MonoBehaviour {
     private Text itemName;
-    private Toggle toggle;
+    public GameObject toggle;
     private bool selected = false;
     private string selectedOption;
     private Text toolTip;
@@ -16,19 +16,19 @@ public class OrderScrollViewScript : MonoBehaviour {
     {
         itemName = dropDown.captionText;
         Debug.Log("test");
-        if (!(itemName.text == "Getränke"))
+        if (!(itemName.text == "Getränke") && !(itemName.text == "Gerichte") && !(itemName.text == "Nachspeisen"))
         {
-            selectedOption = dropDown.captionText.text;
-            //Instantiate(toggle);
+            GameObject newToggle = Instantiate(toggle) as GameObject;
+            newToggle.GetComponentInChildren<Text>().text = "- " + itemName.text;
+            newToggle.SetActive(true);
+            newToggle.transform.SetParent(gameObject.transform.GetChild(0).GetChild(0), false);
             //toggle.GetComponentInChildren<Text>().text = itemName.text;
             //toggle.transform.SetParent(gameObject.transform, false);
             //GameObject.FindGameObjectWithTag("MenuPanel").SetActive(false);
             //this.transform.parent.gameObject.SetActive(true);
-            Debug.Log("before 1 ....");
             selectedOption = dropDown.captionText.text;
-            Debug.Log("before 2....");
             dropDown.value = 0;
-            Debug.Log("before 4.... mit " + selectedOption);
+            Debug.Log(selectedOption);
             dropDown.Hide();
         }
 
@@ -36,13 +36,18 @@ public class OrderScrollViewScript : MonoBehaviour {
 
     public void showToolTip(Text toolTip)
     {
-        Debug.Log("methode aufgerufen mit " + selectedOption);
+        Debug.Log("showtooltip-methode aufgerufen mit " + selectedOption);
         this.toolTip = toolTip;
-        if (!(selectedOption == "Getränke"))
+        if (!(selectedOption == "Getränke") && !(selectedOption == "Gerichte") && !(selectedOption == "Nachspeisen"))
         {
             Debug.Log("before showToolTip....");
             toolTip.text = selectedOption + " hinzugefügt";
             toolTip.gameObject.SetActive(true);
+            if (this.IsInvoking())
+            {
+                Debug.Log("canceling invoke");
+                this.CancelInvoke();
+            }
             Invoke("deactivateText", 2);
         }
         

@@ -8,7 +8,6 @@ using UnityEngine.UI;
 public class OrderScrollViewScript : MonoBehaviour {
     private Text itemName;
     public GameObject toggle;
-    private bool selected = false;
     private string selectedOption;
     private Text toolTip;
 
@@ -19,13 +18,9 @@ public class OrderScrollViewScript : MonoBehaviour {
         if (!(itemName.text == "Getränke") && !(itemName.text == "Gerichte") && !(itemName.text == "Nachspeisen"))
         {
             GameObject newToggle = Instantiate(toggle) as GameObject;
-            newToggle.GetComponentInChildren<Text>().text = "- " + itemName.text;
+            newToggle.GetComponentInChildren<Text>().text = itemName.text;
             newToggle.SetActive(true);
             newToggle.transform.SetParent(gameObject.transform.GetChild(0).GetChild(0), false);
-            //toggle.GetComponentInChildren<Text>().text = itemName.text;
-            //toggle.transform.SetParent(gameObject.transform, false);
-            //GameObject.FindGameObjectWithTag("MenuPanel").SetActive(false);
-            //this.transform.parent.gameObject.SetActive(true);
             selectedOption = dropDown.captionText.text;
             dropDown.value = 0;
             Debug.Log(selectedOption);
@@ -53,14 +48,8 @@ public class OrderScrollViewScript : MonoBehaviour {
         
     }
 
-
     public void deactivateText()
     {
         toolTip.gameObject.SetActive(false);
-    }
-
-    void Update()
-    {
-
     }
 }

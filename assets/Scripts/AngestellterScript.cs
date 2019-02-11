@@ -5,39 +5,16 @@ using UnityEngine.SceneManagement;
 
 public class AngestellterScript : MonoBehaviour {
 
-    public GameObject content;
-    //public GameObject viewPort;
+    public GameObject arCamera;
+    public Camera uiCamera;
+    public GameObject target;
 
-    // Use this for initialization
-    void Start () {
-        Debug.Log("ENTERED START-METHOD");
-        Debug.Log(DataScript.getContent());
-        if (!(DataScript.content==null))
-        {
-            Debug.Log("set content --> datascript content");
-            content = DataScript.getContent();
-        } else
-        {
-            Debug.Log("content null");
-        }
-	}
-	
-	// Update is called once per frame
-	void Update () {
-        //Debug.Log("ENTERED UPDATE-METHOD");
-        if (!(content == null))
-        {
-            if (Input.GetKeyDown(KeyCode.Escape))
-            {
-                Debug.Log("datascript content --> content");
-                DataScript.setContent(content);
-                SceneManager.LoadScene("SampleScene", LoadSceneMode.Single);
-            }    
-        }
-    }
-
-    void Awake()
+    void Update()
     {
-
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+            arCamera.gameObject.SetActive(false);
+            target.gameObject.SetActive(false);
+            uiCamera.enabled = true;
+        }
     }
 }
